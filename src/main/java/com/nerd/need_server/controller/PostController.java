@@ -56,8 +56,8 @@ public class PostController {
     }
 
     @PatchMapping("/{idx}")
-    public BaseResponse<Void> modifyState(@RequestParam String state, @PathVariable int idx) throws CustomException {
-        postService.modifyState(idx, state);
+    public BaseResponse<Void> modifyState(@RequestHeader("Authorization") String token, @RequestParam String state, @PathVariable int idx) throws CustomException {
+        postService.modifyState(token, idx, state);
         return new BaseResponse<>("변경했어요", HttpStatus.OK.value(), null);
     }
 

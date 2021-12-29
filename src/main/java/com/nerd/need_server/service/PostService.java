@@ -74,11 +74,13 @@ public class PostService {
         return postRepository.findById(idx).map(PostResponse::new).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다"));
     }
 
-    public void modifyState(int postIdx, String state) throws CustomException {
+    public void modifyState(String token, int postIdx, String state) throws CustomException {
         Optional<Post> post = postRepository.findById(postIdx);
         post.orElseThrow(()->new CustomException(HttpStatus.NOT_FOUND, "게시글이 없어요!"));
 
         if(post.get().getState().equals(state)) throw new CustomException(HttpStatus.CONFLICT, "변경 사항이 없어요!");
+
+        if(authService.getUserByToken(token).getIdx() != post.get().getUser().getIdx()) throw new CustomException(HttpStatus.FORBIDDEN, "작성자만 수정할 수 있어요!");
 
         post.get().setState(state);
 
