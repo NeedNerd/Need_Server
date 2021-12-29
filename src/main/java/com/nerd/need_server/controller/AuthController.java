@@ -3,15 +3,14 @@ package com.nerd.need_server.controller;
 import com.nerd.need_server.request.RegisterRequest;
 import com.nerd.need_server.response.BaseResponse;
 import com.nerd.need_server.request.LoginRequest;
+import com.nerd.need_server.response.InfoResponse;
 import com.nerd.need_server.service.AuthService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin("*")
 public class AuthController {
 
     private final AuthService authService;
@@ -31,6 +30,11 @@ public class AuthController {
         authService.register(registerRequest);
 
         return new BaseResponse<>("회원가입 했어요", 200, null);
+    }
+
+    @GetMapping("/my")
+    public BaseResponse<InfoResponse> getMyInfo(@RequestHeader("Authorization") String token) {
+        return new BaseResponse<>("조회했어요", HttpStatus.OK.value(), authService.getInfo(token));
     }
 
 }
