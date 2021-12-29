@@ -18,6 +18,7 @@ public class PostResponse {
     private String photo;
     private String date;
     private String writer;
+    private int userIdx;
     private String local;
     private String contact;
 
@@ -30,6 +31,7 @@ public class PostResponse {
         this.price = post.getPrice();
         this.date = post.getDate();
         this.writer = post.getUser().getName();
+        this.userIdx = post.getUser().getIdx();
         this.local = post.getUser().getLocal();
         this.contact = post.getUser().getContact();
     }

@@ -65,6 +65,7 @@ public class AuthService {
         InfoResponse infoResponse = new InfoResponse();
         User user = getUserByToken(token);
 
+        infoResponse.setUserIdx(user.getIdx());
         infoResponse.setName(user.getName());
 
         String beforeMonth = LocalDate.now().minusMonths(1).format(dateTimeFormatter);
