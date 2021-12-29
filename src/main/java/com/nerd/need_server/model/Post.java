@@ -29,6 +29,9 @@ public class Post {
     @Column(name = "photo")
     private String photo;
 
+    @Column(name = "status")
+    public String status;
+
     @ManyToOne
     @JoinColumn(name = "user_idx")
     private User user;
