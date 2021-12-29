@@ -1,8 +1,10 @@
 package com.nerd.need_server.service;
 
 import com.nerd.need_server.exception.CustomException;
+import com.nerd.need_server.model.User;
 import com.nerd.need_server.repository.UserRepository;
 import com.nerd.need_server.request.LoginRequest;
+import com.nerd.need_server.request.RegisterRequest;
 import com.nerd.need_server.security.JwtUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,7 +40,18 @@ public class AuthService {
         return jwtUtil.generateToken(loginRequest.getId());
     }
 
-    public void register() {
+    public void register(RegisterRequest registerRequest) throws Exception {
 
+        User user = new User(registerRequest.getId(), passwordEncoder.encode(registerRequest.getPassword()), registerRequest.getContact(), registerRequest.getLocal(), registerRequest.getName());
+
+        try {
+            userRepository.save(user);
+        } catch (Exception e) {
+            throw new CustomException(HttpStatus.CONFLICT, "동일한 아이디가 이미 있어요");
+        }
+    }
+
+    public User getUserByToken(String token) {
+        return userRepository.getUserById(jwtUtil.extractUsername(token));
     }
 }

@@ -16,6 +16,10 @@ import java.util.List;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idx;
+
+    @Column(name = "id")
     private String id;
 
     @Column(name = "password")
@@ -30,11 +34,15 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "idx")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idx;
 
     @OneToMany(mappedBy = "user")
     private List<Post> post = new ArrayList<>();
 
+    public User(String id, String password, String contact, String local, String name) {
+        this.id = id;
+        this.password = password;
+        this.contact = contact;
+        this.local = local;
+        this.name = name;
+    }
 }
