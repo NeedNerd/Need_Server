@@ -1,5 +1,6 @@
-package com.nerd.need_server.exception;
+package com.nerd.need_server.handler;
 
+import com.nerd.need_server.exception.CustomException;
 import com.nerd.need_server.response.BaseResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,4 +18,11 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(returnValue, exception.getCode());
     }
+
+    @ExceptionHandler(value = {Exception.class})
+    public Exception handleException(Exception exception) {
+        exception.printStackTrace();
+        return exception;
+    }
+
 }
