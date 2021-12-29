@@ -29,10 +29,13 @@ public class Post {
     @Column(name = "photo")
     private String photo;
 
-    @Column(name = "status")
-    public String status;
+    @Column(name = "state")
+    private String state;
 
-    @ManyToOne
+    @Column(name = "price")
+    private int price;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_idx")
     private User user;
 
